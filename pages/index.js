@@ -6,14 +6,28 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Grid, ThemeProvider } from '@mui/material'
 import { createTheme } from '@mui/material/styles'
 import TopBar from '../components/TopBar'
 import RecommendationTable from '../components/RecommendationTable'
 import KpiCard from '../components/KpiCard'
+import { getRecommendation } from '../services/recommendation';
 
 export default function Home() {
+  const [recommendation, setRecommendation] = useState([]);
+
+  useEffect(() => {
+    let mounted = true;
+    getRecommendation()
+     .then(items => {
+       if(mounted) {
+         setRecommendation(items)
+       }
+     })
+   return () => mounted = false;
+  },[]);
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 2 }}>
@@ -37,7 +51,7 @@ export default function Home() {
 
           <Grid item xs={2}></Grid>
           <Grid item xs={8}>
-            <RecommendationTable sx={{ padding: 20 }}></RecommendationTable>
+            <RecommendationTable sx={{ padding: 20 }} recommendation={recommendation}></RecommendationTable>
           </Grid>
           <Grid item xs={2}></Grid>
         </Grid>

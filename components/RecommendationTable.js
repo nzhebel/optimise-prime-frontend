@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
 
-const RecommendationTable = () => {
+const RecommendationTable = (props) => {
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer  sx={{ height: 600 }}>
@@ -17,19 +17,19 @@ const RecommendationTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {props.recommendation.map((row) => (
                         <TableRow 
                         hover
-                        key={row.instance}
+                        key={row.id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                                {row.instance}
+                                {row.id}
                             </TableCell>
-                            <TableCell align="left">{row.type}</TableCell>
-                            <TableCell align="left">{row.status}</TableCell>
-                            <TableCell align="left">{row.recommendation}</TableCell>
-                            <TableCell align="right">{row.savings.toLocaleString()}</TableCell>
+                            <TableCell align="left">{row.userId}</TableCell>
+                            <TableCell align="left">{row.title}</TableCell>
+                            <TableCell align="left"></TableCell>
+                            <TableCell align="right"></TableCell>
                         </TableRow>
                     ))}
                     <TableRow>
@@ -58,18 +58,6 @@ function createData(instance, type, status, recommendation, savings) {
     createData('Workload 1', 'EC2.S', 'OK', '', 0),
     createData('Workload 2', 'EC2.L', 'Optimize', 'AWS Lambda', 1000),
     createData('Workload 3', 'Lambda', 'OK', '', 0),
-    createData('Workload 1', 'EC2.S', 'OK', '', 0),
-    createData('Workload 2', 'EC2.L', 'Optimize', 'AWS Lambda', 1000),
-    createData('Workload 3', 'Lambda', 'OK', '', 0),
-    createData('Workload 1', 'EC2.S', 'OK', '', 0),
-    createData('Workload 2', 'EC2.L', 'Optimize', 'AWS Lambda', 1000),
-    createData('Workload 3', 'Lambda', 'OK', '', 0),
-    createData('Workload 1', 'EC2.S', 'OK', '', 0),
-    createData('Workload 2', 'EC2.L', 'Optimize', 'AWS Lambda', 1000),
-    createData('Workload 3', 'Lambda', 'OK', '', 0),
-    createData('Workload 1', 'EC2.S', 'OK', '', 0),
-    createData('Workload 2', 'EC2.L', 'Optimize', 'AWS Lambda', 1000),
-    createData('Workload 3', 'Lambda', 'OK', '', 0)
   ];
 
 export default RecommendationTable
