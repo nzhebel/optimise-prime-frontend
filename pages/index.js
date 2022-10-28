@@ -16,13 +16,21 @@ import { getRecommendation } from '../services/recommendation';
 
 export default function Home() {
   const [recommendation, setRecommendation] = useState([]);
+  const [savedEmissions, setSavedEmissions] = useState(0);
+  const [optimisedInstances, setOptimisedInstances] = useState(0);
+  const [savedCosts, setSavedCosts] = useState(0);
 
   useEffect(() => {
     let mounted = true;
     getRecommendation()
      .then(items => {
        if(mounted) {
-         setRecommendation(items)
+         setRecommendation(items);
+         setSavedEmissions(items.map(item => Math.round(item['service'].current['co2'] - item['service'].potential.base['co2']))
+                                .reduce((result, item) => result + item, 0));
+        setOptimisedInstances(items.length);
+        setSavedCosts(items.map(item => item['service'].current['cost'] - item['service'].potential.base['cost'])
+                                .reduce((result, item) => result + item, 0));
        }
      })
    return () => mounted = false;
@@ -37,15 +45,15 @@ export default function Home() {
 
           <Grid item xs={2}></Grid>
           <Grid item xs={2}>
-            	<KpiCard name="Saved Emissions" value="1,000"></KpiCard>
+            	<KpiCard name="Saved Emissions" value={savedEmissions}></KpiCard>
           </Grid>
           <Grid item xs={1}></Grid>
           <Grid item xs={2}>
-            <KpiCard name="Optimised Instances" value="4"></KpiCard>
+            <KpiCard name="Optimised Instances" value={optimisedInstances}></KpiCard>
           </Grid>
           <Grid item xs={1}></Grid>
           <Grid item xs={2}>
-            <KpiCard name="Highest Saving" value="1,000"></KpiCard>
+            <KpiCard name="Saved Costs" value={savedCosts}></KpiCard>
           </Grid>
           <Grid item xs={2}></Grid>
 
