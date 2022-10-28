@@ -4,10 +4,8 @@ import React, { Component } from 'react'
 import { AppBar, Box, IconButton, Toolbar, Button, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default class TopBar extends Component {
-  //static propTypes = {second: third}
+const  TopBar = () => {
 
-  render() {
     return (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
@@ -31,4 +29,5 @@ export default class TopBar extends Component {
       </Box>
     )
   }
-}
+
+  export default TopBar

@@ -23,12 +23,15 @@ export default function Home() {
 
           <Grid item xs={2}></Grid>
           <Grid item xs={2}>
+            	<KpiCard name="Saved Emissions" value="1,000"></KpiCard>
           </Grid>
           <Grid item xs={1}></Grid>
           <Grid item xs={2}>
+            <KpiCard name="Optimised Instances" value="4"></KpiCard>
           </Grid>
           <Grid item xs={1}></Grid>
           <Grid item xs={2}>
+            <KpiCard name="Highest Saving" value="1,000"></KpiCard>
           </Grid>
           <Grid item xs={2}></Grid>
 
