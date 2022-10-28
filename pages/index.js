@@ -1,38 +1,80 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
+import React, { useEffect, useState } from 'react';
+import { Box, Card, CardContent, Grid, ThemeProvider } from '@mui/material'
+import { createTheme } from '@mui/material/styles'
+import TopBar from '../components/TopBar'
+import RecommendationTable from '../components/RecommendationTable'
+import KpiCard from '../components/KpiCard'
+import { getRecommendation } from '../services/recommendation';
 
 export default function Home() {
+  const [recommendation, setRecommendation] = useState([]);
+  const [savedEmissions, setSavedEmissions] = useState(0);
+  const [optimisedInstances, setOptimisedInstances] = useState(0);
+  const [savedCosts, setSavedCosts] = useState(0);
+
+  useEffect(() => {
+    let mounted = true;
+    getRecommendation()
+     .then(items => {
+       if(mounted) {
+         setRecommendation(items);
+         setSavedEmissions(items.map(item => Math.round(item['service'].current['co2'] - item['service'].potential.base['co2']))
+                                .reduce((result, item) => result + item, 0));
+        setOptimisedInstances(items.length);
+        setSavedCosts(items.map(item => item['service'].current['cost'] - item['service'].potential.base['cost'])
+                                .reduce((result, item) => result + item, 0));
+       }
+     })
+   return () => mounted = false;
+  },[]);
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Optimise Prime</title>
-        <meta name="description" content="Sustainable optimisation of cloud workloads" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ flexGrow: 2 }}>
+        <TopBar></TopBar>
+        <Grid container spacing={2}>
+          <Grid item xs={12}></Grid>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          This is Optimise Prime!
-        </h1>
+          <Grid item xs={2}></Grid>
+          <Grid item xs={2}>
+            	<KpiCard name="Saved Emissions" value={savedEmissions}></KpiCard>
+          </Grid>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={2}>
+            <KpiCard name="Optimised Instances" value={optimisedInstances}></KpiCard>
+          </Grid>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={2}>
+            <KpiCard name="Saved Costs" value={savedCosts}></KpiCard>
+          </Grid>
+          <Grid item xs={2}></Grid>
 
-        <p className={styles.description}>
-          Let's get optimising!
-        </p>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+          <Grid item xs={2}></Grid>
+          <Grid item xs={8}>
+            <RecommendationTable sx={{ padding: 20 }} recommendation={recommendation}></RecommendationTable>
+          </Grid>
+          <Grid item xs={2}></Grid>
+        </Grid>
+      </Box>
+    </ThemeProvider>
   )
 }
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#60ad5e',
+      main: '#2e7d32',
+      dark: '#005005',
+      contrastText: '#ffffff',
+    },
+  },
+});
