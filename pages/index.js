@@ -26,7 +26,7 @@ export default function Home() {
      .then(items => {
        if(mounted) {
          setRecommendation(items);
-         setSavedEmissions(items.map(item => Math.round(item['service'].current['co2'] - item['service'].potential.base['co2']))
+         setSavedEmissions(items.map(item => Math.round((item['service'].current['co2'] - item['service'].potential.base['co2'])/1000))
                                 .reduce((result, item) => result + item, 0));
         setOptimisedInstances(items.length);
         setSavedCosts(items.map(item => item['service'].current['cost'] - item['service'].potential.base['cost'])
@@ -38,6 +38,10 @@ export default function Home() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <title>Optimise Prime</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <Box sx={{ flexGrow: 2 }}>
         <TopBar></TopBar>
         <Grid container spacing={2}>
@@ -45,7 +49,7 @@ export default function Home() {
 
           <Grid item xs={2}></Grid>
           <Grid item xs={2}>
-            	<KpiCard name="Saved Emissions" value={savedEmissions} unit={"kg/year"}></KpiCard>
+            	<KpiCard name={"CO2 Savings"} value={savedEmissions} unit={"kg/year"}></KpiCard>
           </Grid>
           <Grid item xs={1}></Grid>
           <Grid item xs={2}>
@@ -53,7 +57,7 @@ export default function Home() {
           </Grid>
           <Grid item xs={1}></Grid>
           <Grid item xs={2}>
-            <KpiCard name="Saved Costs" value={savedCosts} unit={"€/hour"}></KpiCard>
+            <KpiCard name="Cost Savings" value={savedCosts} unit={"$/year"}></KpiCard>
           </Grid>
           <Grid item xs={2}></Grid>
 
@@ -76,5 +80,6 @@ const theme = createTheme({
       dark: '#005005',
       contrastText: '#ffffff',
     },
+    paper: '#f8f8ff',
   },
 });

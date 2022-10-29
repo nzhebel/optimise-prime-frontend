@@ -8,12 +8,12 @@ const RecommendationTable = (props) => {
         <TableContainer  sx={{ maxHeight: 600 }}>
             <Table stickyHeader sx={{ minWidth: 650 }} aria-label="recommendation table">
                 <TableHead>
-                    <TableRow>
+                    <TableRow sx={{ backgroundColor: '#2e7d32' }}>
                         <TableCell>Instance</TableCell>
                         <TableCell align='left'>Type</TableCell>
                         <TableCell align='left'>Status</TableCell>
                         <TableCell align='left'>Recommendation</TableCell>
-                        <TableCell align='right'>Savings (in metric tons)</TableCell>
+                        <TableCell align='right'>CO<sup>2</sup> Savings (in kg/year)</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -29,7 +29,7 @@ const RecommendationTable = (props) => {
                             <TableCell align="left">{row['service'].current['Service']}</TableCell>
                             <TableCell align="left">{row['service'].current['instance type']}</TableCell>
                             <TableCell align="left">{row['service'].potential.base['Service']} - {row['service'].potential.base['instance type']}</TableCell>
-                            <TableCell align="right">{Math.round(row['service'].current['co2'] - row['service'].potential.base['co2'])}</TableCell>
+                            <TableCell align="right">{Math.round((row['service'].current['co2'] - row['service'].potential.base['co2'])/1000)}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -44,7 +44,7 @@ const RecommendationTable = (props) => {
                         <TableCell align="right">
                             <Typography>
                                 {props.recommendation
-                                    .map(item => Math.round(item['service'].current['co2'] - item['service'].potential.base['co2']))
+                                    .map(item => Math.round((item['service'].current['co2'] - item['service'].potential.base['co2'])/1000))
                                     .reduce((result, item) => result + item, 0)
                                 }
                             </Typography>
