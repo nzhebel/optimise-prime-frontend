@@ -7,7 +7,7 @@ COPY --chown=node:node . .
 USER node
 
 RUN npm install
-RUN next build
+RUN npm build
 
 EXPOSE 3000
-CMD [ "next", "start" ]
+CMD [ "npm", "run", "dev" ]
