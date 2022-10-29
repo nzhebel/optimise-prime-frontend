@@ -6,8 +6,8 @@ COPY --chown=node:node . .
 
 USER node
 
-RUN yarn install --frozen-lockfile
-RUN yarn build
+RUN npm install
+RUN next build
 
 EXPOSE 3000
-CMD [ "yarn", "start" ]
+CMD [ "next", "start" ]
