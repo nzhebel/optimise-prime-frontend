@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material'
+import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TableFooter } from '@mui/material'
 
 const RecommendationTable = (props) => {
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer  sx={{ height: 600 }}>
+        <TableContainer  sx={{ maxHeight: 600 }}>
             <Table stickyHeader sx={{ minWidth: 650 }} aria-label="recommendation table">
                 <TableHead>
                     <TableRow>
@@ -32,7 +32,9 @@ const RecommendationTable = (props) => {
                             <TableCell align="right">{Math.round(row['service'].current['co2'] - row['service'].potential.base['co2'])}</TableCell>
                         </TableRow>
                     ))}
-                    <TableRow>
+                </TableBody>
+                <TableFooter>
+                <TableRow>
                         <TableCell component="th" scope="row">
                             <Typography>Total</Typography>
                         </TableCell>
@@ -48,7 +50,7 @@ const RecommendationTable = (props) => {
                             </Typography>
                         </TableCell>
                     </TableRow>
-                </TableBody>
+                </TableFooter>
             </Table>
         </TableContainer>
     </Paper>

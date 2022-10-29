@@ -7,7 +7,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import React, { useEffect, useState } from 'react';
-import { Box, Card, CardContent, Grid, ThemeProvider } from '@mui/material'
+import { Box, Grid, ThemeProvider } from '@mui/material'
 import { createTheme } from '@mui/material/styles'
 import TopBar from '../components/TopBar'
 import RecommendationTable from '../components/RecommendationTable'
@@ -45,15 +45,15 @@ export default function Home() {
 
           <Grid item xs={2}></Grid>
           <Grid item xs={2}>
-            	<KpiCard name="Saved Emissions" value={savedEmissions}></KpiCard>
+            	<KpiCard name="Saved Emissions" value={savedEmissions} unit={"kg/year"}></KpiCard>
           </Grid>
           <Grid item xs={1}></Grid>
           <Grid item xs={2}>
-            <KpiCard name="Optimised Instances" value={optimisedInstances}></KpiCard>
+            <KpiCard name="Optimised Instances" value={optimisedInstances} unit={"Instances"}></KpiCard>
           </Grid>
           <Grid item xs={1}></Grid>
           <Grid item xs={2}>
-            <KpiCard name="Saved Costs" value={savedCosts}></KpiCard>
+            <KpiCard name="Saved Costs" value={savedCosts} unit={"€/hour"}></KpiCard>
           </Grid>
           <Grid item xs={2}></Grid>
 
