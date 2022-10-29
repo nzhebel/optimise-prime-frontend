@@ -11,7 +11,8 @@ const RecommendationTable = (props) => {
                     <TableRow sx={{ backgroundColor: '#2e7d32' }}>
                         <TableCell>Instance</TableCell>
                         <TableCell align='left'>Type</TableCell>
-                        <TableCell align='left'>Status</TableCell>
+                        <TableCell align='left'>vCPU</TableCell>
+                        <TableCell align='left'>Memory</TableCell>
                         <TableCell align='left'>Recommendation</TableCell>
                         <TableCell align='right'>CO<sup>2</sup> Savings (in kg/year)</TableCell>
                     </TableRow>
@@ -24,11 +25,12 @@ const RecommendationTable = (props) => {
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                                {row['service'].current.Service}
+                                {row['service'].current.service}
                             </TableCell>
-                            <TableCell align="left">{row['service'].current['Service']}</TableCell>
-                            <TableCell align="left">{row['service'].current['instance type']}</TableCell>
-                            <TableCell align="left">{row['service'].potential.base['Service']} - {row['service'].potential.base['instance type']}</TableCell>
+                            <TableCell align="left">{row['service'].current['instance_type']}</TableCell>
+                            <TableCell align="left">{row['service'].current['v_cpu']}</TableCell>
+                            <TableCell align="left">{row['service'].current['memory']}</TableCell>
+                            <TableCell align="left">{row['service'].potential.base['service']} - {row['service'].potential.base['instance_type']}</TableCell>
                             <TableCell align="right">{Math.round((row['service'].current['co2'] - row['service'].potential.base['co2'])/1000)}</TableCell>
                         </TableRow>
                     ))}
@@ -38,6 +40,7 @@ const RecommendationTable = (props) => {
                         <TableCell component="th" scope="row">
                             <Typography>Total</Typography>
                         </TableCell>
+                        <TableCell align="left"></TableCell>
                         <TableCell align="left"></TableCell>
                         <TableCell align="left"></TableCell>
                         <TableCell align="left"></TableCell>
