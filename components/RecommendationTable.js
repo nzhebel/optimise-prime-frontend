@@ -20,16 +20,16 @@ const RecommendationTable = (props) => {
                     {props.recommendation.map((row) => (
                         <TableRow 
                         hover
-                        key={row.id}
+                        key={row['service']}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                                {row.id}
+                                {row['service'].current.Service}
                             </TableCell>
-                            <TableCell align="left">{row.userId}</TableCell>
-                            <TableCell align="left">{row.title}</TableCell>
-                            <TableCell align="left"></TableCell>
-                            <TableCell align="right"></TableCell>
+                            <TableCell align="left">{row['service'].current['Service']}</TableCell>
+                            <TableCell align="left">{row['service'].current['instance type']}</TableCell>
+                            <TableCell align="left">{row['service'].potential.base['Service']} - {row['service'].potential.base['instance type']}</TableCell>
+                            <TableCell align="right">{Math.round(row['service'].current['co2'] - row['service'].potential.base['co2'])}</TableCell>
                         </TableRow>
                     ))}
                     <TableRow>
@@ -40,7 +40,12 @@ const RecommendationTable = (props) => {
                         <TableCell align="left"></TableCell>
                         <TableCell align="left"></TableCell>
                         <TableCell align="right">
-                            <Typography>1,000</Typography>
+                            <Typography>
+                                {props.recommendation
+                                    .map(item => Math.round(item['service'].current['co2'] - item['service'].potential.base['co2']))
+                                    .reduce((result, item) => result + item, 0)
+                                }
+                            </Typography>
                         </TableCell>
                     </TableRow>
                 </TableBody>
